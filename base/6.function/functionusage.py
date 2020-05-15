@@ -70,3 +70,73 @@ def fn5(b, c, **a):
 
 fn4(b=1, d=2, c=3)
 fn5(a=1, b=2, c=3, d=4, e=5)
+
+
+# 参数的解包
+def fn6(a, b, c):
+    print('a = ', a)
+    print('b = ', b)
+    print('c = ', c)
+
+
+# 创建一个元组
+t = (10, 20, 30)
+
+# 传递实参时，也可以在序列类型的参数前添加星号
+# 这里要求序列中元素的个数必须和形参的个数一致
+fn6(*t)
+
+# 创建一个字典,通过**来对一个字典进行解包操作
+d = {'a': 100, 'b': 200, 'c': 300}
+fn6(**d)
+
+
+# 返回值，函数执行以后返回的结果。通过return来指定函数的返回值
+# 如果仅仅写一个return或者不写return，则相当于return None
+# 在函数体内，return一旦执行，后续的代码块都不会被执行
+def sum(*nums):
+    total = 0
+    for n in nums:
+        total += n
+    print(total)
+    return total
+
+
+result = sum(123, 456, 789)
+print(result)
+
+
+def fn():
+    for i in range(5):
+        if i == 3:
+            # break用来退出当前循环
+            # break
+            # continue用来跳过当次循环
+            continue
+        print(i)
+
+
+fn()
+# print(fn)打印fn函数对象，print(fn())调用函数，打印函数的返回值
+print(fn)
+print(fn())
+
+
+# 文档字符串:在定义函数时，可以在函数内部编写文档字符串，文档字符串就是函数的说明
+# 当我们编写了文档字符串时，都可以通过help()函数来查看函数的说明
+# 文档字符串非常简单，其实直接在函数的第一行写一个字符串就是文档字符串
+def fn(a: int, b: bool, c: str = 'hello') -> int:
+    """
+    这是一个文档字符串的示例
+    函数的作用：.......
+    函数的参数：
+        a，作用，类型，默认值......
+        b，作用，类型，默认值......
+        c，作用，类型，默认值......
+    ...
+    :return: int
+    """
+
+
+help(fn)
+
