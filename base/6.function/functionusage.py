@@ -273,3 +273,31 @@ average = make_average()
 print(average(10))
 print(average(20))
 print(average(10))
+
+
+# 装饰器:在开发中我们都是通过装饰器来扩展函数的功能，在定义函数时，可以通过@装饰器来使用指定的装饰器
+# 可以同时为一个函数指定多个装饰器,越靠近函数的装饰器先执行
+def fn3(old):
+    """
+    用来对其他函数进行扩展，使其他函数可以在执行前打印开始执行，执行后打印结束执行
+    :param old:
+    :return:
+    """
+
+    # 创建一个函数
+    def new_function(*args, **kwargs):
+        print('fn3装饰===开始执行===')
+        # 调用被扩展的函数
+        res = old(*args, **kwargs)
+        print('fn3装饰===执行结束===')
+        return res
+
+    return new_function
+
+
+@fn3
+def say_hello():
+    print('大家好')
+
+
+say_hello()
