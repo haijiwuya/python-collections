@@ -140,3 +140,136 @@ def fn(a: int, b: bool, c: str = 'hello') -> int:
 
 help(fn)
 
+# 命名空间(namespace)：变量存储的位置，每一个变量都需要存储到指定的命名空间当中
+# 全局命名空间，用来保存局部变量；函数命名空间用来保存函数中的变量
+
+# locals()用来获取当前作用域的命名空间
+# 如果在全局作用域中调用locals()则获取全局命名空间，如果在函数中调用locals()则获取函数中的命名空间
+# locals()返回的就是一个字典
+scope = locals()
+print(scope)
+
+# 向scope中添加一个key-alue,相当于在全局中创建了一个变量
+scope['c'] = 100
+print(c)
+
+# globals()函数可以在任意位置获取全局命名空间
+print(globals()['c'])
+
+
+# 递归
+def factorial(n):
+    """
+    该函数用来求任意数的阶乘
+    :param n:
+    :return:
+    """
+    if n == 1:
+        return 1
+    return n * factorial(n - 1)
+
+
+print(factorial(2))
+
+
+# 创建一个函数求任意字符的幂
+def power(num, times):
+    if times == 1:
+        return num
+    return num * power(num, times - 1)
+
+
+print(pow(10, 2))
+
+
+# 判断任意字符是否是回文字符串
+def isHuiwen(str):
+    length = len(str)
+    if length == 1:
+        return False
+    elif length % 2 == 0:
+        return False
+    chara = str[0: length // 2]
+    charb = str[length // 2 + 1:]
+    if list(reversed(chara)) == list(charb):
+        return True
+
+
+print(isHuiwen('abcb'))
+
+"""
+在python中，函数是一等对象
+    一等对象特点：
+        1、对象是在运行时创建的
+        2、能赋值给变量或作为数据结构中的元素
+        3、能作为参数传递
+        4、能作为返回值返回
+    高阶函数：
+        1、接收一个或多个函数作为参数
+        2、将函数作为返回值返回
+"""
+
+"""
+lambda函数表达式专门用来创建一些简单的函数
+lambda 参数列表：返回值
+"""
+
+lambda a, b: a + b
+# 调用
+print((lambda a, b: a + b)(10, 20))
+
+# 也可将匿名函数赋值给一个变量
+count = lambda a, b: a + b
+print(count(10, 30))
+
+# map()函数可以对可迭代对象中的所有元素做指定的操作
+l = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+r = map(lambda i: i + 1, l)
+print(list(r))
+
+# sort()用来对列表中的元素进行排序
+# 在sort()中可以接受一个关键字参数
+# 该关键字可以以函数作为关键字，每次都会以列表中的一个元素作为参数来调用函数，并且使用函数的返回值来比较元素的大小
+chars = ['aa', 'cc', 'bb', 'ddd', 'oo']
+chars.sort()
+print(chars)
+
+# sorted()和sort()的用法基本一致，但是sorted()可以对任意的队列进行排序
+# 并且不会影响原来的对象，而是返回一个新对象
+
+l = [2, 5, '1', 3, '6', '4']
+print(sorted(l, key=int))
+
+
+# 将函数作为返回值返回
+# 这种高阶函数也称为闭包，通过闭包可以创建一些只有当前函数能访问的变量，可以将一些私有的数据藏到闭包中
+def fn():
+    # 函数内部再定义一个函数
+    def inner():
+        print('我是fn2')
+
+    # 将内部函数inner作为返回值返回
+    return inner
+
+
+print(fn())
+
+# r是一个函数，是调用fn()后返回i的函数 这个函数在fn()内部定义，并不是全局函数，所以这个函数总是能访问到fn()函数内的变量
+r = fn()
+
+
+def make_average():
+    nums = []
+
+    def doaverage(n):
+        nums.append(n)
+        return sum(*nums) / len(nums)
+
+    return doaverage
+
+
+average = make_average()
+
+print(average(10))
+print(average(20))
+print(average(10))
