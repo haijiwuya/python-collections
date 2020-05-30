@@ -29,6 +29,9 @@ class Dog(Animal):
     def set_name(self, name):
         self.__name = name
 
+    def run(self):
+        print('狗跑...')
+
 
 p = Dog('哈士奇')
 
@@ -39,3 +42,8 @@ print(p.get_name)
 print(isinstance(Dog, object))
 print(issubclass(Animal, Dog))
 print(issubclass(Animal, object))
+# 如果在子类中有和父类同名的方法，则通过子类实例去调用方法时，会调用子类的方法而不是父类的方法
+# 这称为方法的重写(override)
+# 当我们调用一个对象的方法时，会优先去当前对象中寻找该方法，如果没有则去当前类的父类去寻找，如果父类中也没有，
+# 则去父类的父类寻找，直到找到object，如果依然没有找到，则报错
+p.run()
